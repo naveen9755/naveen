@@ -1,3 +1,5 @@
+package com.excel.compare;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -5,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -14,6 +17,7 @@ import org.apache.poi.ss.usermodel.Row;
 
 public class ReadWriteXLImple {
 	static Boolean check = false;
+	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
 	public static void main(String args[]) throws IOException {
 		try {
 
@@ -122,7 +126,7 @@ public class ReadWriteXLImple {
 				}
 			}
 			System.out.println("arr3 list values - = - = + " + arr3);
-			writeStudentsListToExcel(arr3);
+			writeStudentsListToExcel(arr3, workbook1);
 
 			// closing the files
 			file1.close();
@@ -137,15 +141,15 @@ public class ReadWriteXLImple {
 	}
 
 	// write into new file excel
-
-	private static void writeStudentsListToExcel(ArrayList arr3) {
+	@SuppressWarnings("rawtypes") 
+	private static void writeStudentsListToExcel(ArrayList arr3, HSSFWorkbook workbook) {
 
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream("/Users/naveensingh/Documents/Jan_Timesheet3.xlsx");
 
-			HSSFWorkbook workBook = new HSSFWorkbook();
-			HSSFSheet spreadSheet = workBook.createSheet("Sheet3");
+			@SuppressWarnings("resource")
+			HSSFSheet spreadSheet = workbook.createSheet("Sheet3");
 			HSSFRow row;
 			HSSFCell cell;
 			// System.out.println("array size is :: "+minusArray.size());
@@ -156,7 +160,7 @@ public class ReadWriteXLImple {
 				// System.out.print(cell.getCellStyle());
 				cell.setCellValue(arr3.get(i1).toString().trim());
 			}
-			workBook.write(fos);
+			workbook.write(fos);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
